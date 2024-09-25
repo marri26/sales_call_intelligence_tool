@@ -13,7 +13,7 @@ jobs:
     strategy:
       max-parallel: 4
       matrix:
-        python-version: [3.7, 3.8, 3.9]
+        python-version: [3.11]
 
     steps:
     - uses: actions/checkout@v4
@@ -25,6 +25,11 @@ jobs:
       run: |
         python3 -m pip install --upgrade pip
         pip3 install -r requirements.txt
+        pip3 install flake8  # Install flake8 for linting
+
+    - name: Run flake8
+      run: |
+        flake8 .  
     - name: Run Tests
       run: |
         python manage.py test
