@@ -124,19 +124,14 @@
     <div class="container">
         <h1>Call Auditor</h1>
 
-        <!-- Display errors (if any) -->
-        {% if error_message %}
-            <div class="error">
-                <p>{{ error_message }}</p>
-            </div>
-        {% endif %}
 
         <!-- Form for auditing a call -->
         <form method="post" action="{% url 'call_auditor' %}">
-            {% csrf_token %}
+            {% csrf_token %} 
+
             <div class="form-group">
                 <label for="url">Enter the Call URL:</label>
-                <input type="url" id="url" name="url" placeholder="https://example.com/call" required>
+                {{ form.call_url }}
             </div>
 
             <button type="submit" class="btn">Audit Call</button>

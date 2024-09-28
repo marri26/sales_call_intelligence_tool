@@ -1,11 +1,13 @@
 import uuid
 from django.db import models
 import datetime
+from django.utils import timezone
+
 
 
 class Call(models.Model):
     def __str__(self):
-        return self.call_id
+        return self.call_url
 
     def is_recent(self):
         return self.audit_datetime >= timezone.now() - datetime.timedelta(days=1)
@@ -13,9 +15,10 @@ class Call(models.Model):
     is_recent.admin_order_field = "is_recent"
     is_recent.boolean = True
     is_recent.short_description = "Is recent?"
-    call_url = models.CharField(max_length=200)
+    call_url = models.URLField(max_length=200)
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    audit_datetime = models.DateTimeField("Date Audited")
+    audit_datetime = models.DateTimeField(default=timezone.now)
+    audit_status = models.CharField(default = "FAILED",max_length=20)
 
 
 class Analysis(models.Model):
